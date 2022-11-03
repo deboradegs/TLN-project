@@ -1,0 +1,13 @@
+car
+body
+speech
+house
+city
+street
+table
+computer
+program
+kitchen
+bathroom
+bedroom
+face
