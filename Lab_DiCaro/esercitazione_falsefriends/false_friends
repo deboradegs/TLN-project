@@ -1,0 +1,94 @@
+import spacy
+import nltk
+import re
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer, SnowballStemmer
+from nltk.tokenize import word_tokenize
+import string
+import scattertext as st
+from collections import defaultdict
+import gensim
+import gensim.corpora as corpora
+import gensim.utils 
+from nltk.wsd import lesk 
+import wn
+import pandas as pd
+from tabulate import tabulate
+
+def stem_lem(text):
+    lemmatizer = WordNetLemmatizer()
+    stemming = SnowballStemmer('english')
+    stop_words = stopwords.words('english')
+    stop_words.extend(['someone', 'something', 'e', 'e.g', 'u', 'ha', 'e.i', 'others', "'s"])
+    string_punctuation = string.punctuation + '’'
+    words = list()
+    for word in word_tokenize(str(text).lower()):
+        #lemma = lemmatizer.lemmatize(word)
+        #stemma = stemming.stem(lemma)
+        words.append(word)
+    return words
+
+stop_words = stopwords.words('english')
+stop_words.extend(['so', '\n'])
+
+def get_sentences_from_file():
+    output = list
+    split_article_content = []
+    df = pd.read_csv("text_emotion.csv")
+    ls = df['content'].values.tolist()
+    #print(ls)
+    # df = st.SampleCorpora.RottenTomatoes.get_data().assign(
+    #     parse = lambda df:df.text.apply(st.whitespace_nlp_with_sentences)
+    # )
+    #ls = df['text'].values.tolist()
+    for sent in ls:
+        split_article_content += re.split("(?<=[.!?])\s+", sent)
+    return split_article_content
+
+data = get_sentences_from_file()
+
+
+
+
+def extract_false_friends(text_splitted):
+    word_definition= dict()
+    couples = []
+    stemming = SnowballStemmer('english')
+    lemmatizer = WordNetLemmatizer()
+    
+    for sent in text_splitted:
+        sent = stem_lem(sent)
+        #splitted_sent = str
+        #splitted_sent = sent.split()
+        couples_words = []
+        couple_definitions = []
+        #for word in splitted_sent:
+        for word in sent:
+            answer = lesk(sent,word)
+            if answer is not None:
+                definition = answer.definition()
+                couples.append((word, definition))
+
+    word_definition = dict(couples)
+    more_than_a_definition = dict()
+    res = defaultdict(list)
+    for key, val in sorted(word_definition.items()):
+        if val not in res[lemmatizer.lemmatize(key)]:
+            res[lemmatizer.lemmatize(key)].append(val)
+
+        
+    for key in res:
+        if len(res[key])>1:
+           more_than_a_definition[key] = res[key]
+
+    table2 = pd.DataFrame.from_dict(more_than_a_definition, orient= 'index')
+    print(tabulate(table2, headers=['Word', 1, 2, 3, 4], tablefmt="plain"))
+
+
+            
+
+freq = extract_false_friends(data)
+
+
+
+#print(false_friends)
