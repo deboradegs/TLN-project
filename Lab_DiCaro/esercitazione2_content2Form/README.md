@@ -24,7 +24,7 @@ Preso ogni concetto, presa ogni parola più frequente
 
 
 ### Risultati
-
+```
 ----- Best 5 sense for Emotion -----
 
 ╒═════════════════════════════╤═══════════════════════════════════════════════╤═════════╕
