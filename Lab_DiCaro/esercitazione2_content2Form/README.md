@@ -19,9 +19,16 @@ Questa funzione crea un dizionario nella forma concetto-definizione partendo dal
 Restituisce un dizionario che per ogni concetto ha le |frequenza| parole più frequenti per ogni definizione.
 
 ## Funzione - get_synset_context()
-Preso ogni concetto, presa ogni parola più frequente
+Preso ogni concetto: 
+per ogni parola più frequente viene creata una lista di synset;
+per ogni synset viene creata una lista di iponimi;
+per ogni synset e iponimo viene generato il contesto.
+A partire dal contesto, vengono presi gli esempi (i lemmi).
+A ciascun synset verrà assegnato uno score, in questo modo:
+viene calcolata l'intersezione degli esempi del contesto del synset con le parole più frequenti, dividendo la lunghezza di questa lista per la lungheza degli esempi + parole più frequenti (tutto senza ripetizioni).
 
-
+## Funzione print_table()
+Stampa la tabella degli score dei synset per ogni concetto, aggiungendo la definizione.
 
 ### Risultati
 ```
