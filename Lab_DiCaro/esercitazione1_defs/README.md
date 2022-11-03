@@ -10,9 +10,10 @@ I concetti da analizzare si dividono in due categorie:
   - Emotion (generico)
   - Revenge (specifico)
 
-### Funzione - words_frequency()
+### Funzione - stem_lem(text)
 Crea un dizionario con chiavi corrispondenti ai concetti da analizzare, contenenti una lista delle 5 parole più frequenti estratte dalle rispettive definizioni.  
 Il processo di estrazione delle parole inizia rimuovendo la punteggiatura e le stopwords da ogni definizione e termina con il conteggio della frequenza di ogni parola estratta.
+![Screenshot (321)](https://user-images.githubusercontent.com/66359850/199749976-d84a8097-7c14-441c-bfb7-7a726e95a645.png)
 
 ### Funzione - get_definitions_overlap_score()
 Calcola l'overlap score sfruttando le 5 cinque parole più frequenti precedentemente estratte per ogni concetto.  
