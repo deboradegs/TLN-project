@@ -12,6 +12,16 @@ Date le definizioni, per ogni concetto, abbiamo le 3 parole più frequenti e in 
 Per assegnare uno score ai synset abbiamo utilizzato una funzione che identifica la somiglianza tra contesto trovato e parole più frequenti (lo score più alto lo avrà il synset il cui contesto assomiglia di più alle nostre definizioni).
 Da qui, verranno estratti i 5 synset con score più alto.
 
+## Funzione - data_to_dict():
+Questa funzione crea un dizionario nella forma concetto-definizione partendo dal file Excel.
+
+## Funzione - frequency(dictionary, frequenza)
+Restituisce un dizionario che per ogni concetto ha le |frequenza| parole più frequenti per ogni definizione.
+
+## Funzione - get_synset_context()
+Preso ogni concetto, presa ogni parola più frequente
+
+
 
 ### Risultati
 
