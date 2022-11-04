@@ -35,6 +35,7 @@ Cerca i synset dell'olonimo e per quei synset cerca i meronimi. Se iniziano con 
 Calcola il punteggio dell'utente, confrontando quante parole ha inserito di quelle che ha trovato il computer.
 
 ## Risultati
+```
 Game starts.
 Write as many words as possible in 30 secs!
 
