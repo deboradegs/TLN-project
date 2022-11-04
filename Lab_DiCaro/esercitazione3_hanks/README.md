@@ -21,6 +21,7 @@ All'interno della directory resource è disponibile il file `wn_synset2csi.txt` 
 ## Supersensi
 I super-sensi ottenuti vengono raggruppati per calcolarne la frequenza, e questo procedimento è applicato sia alle frasi con solo un argomento (*None-obj* oppure *sub-None*) che alle frasi con entrambi gli argomenti.
 
+###Funzioni
 ### Funzione - get_supersense_from_file()
 Apre il file `wn_synset2csi.txt` e crea un dizionario con chiave: identificativo in Wordnet della parola e valore: supersenso corrispondente
 
@@ -41,7 +42,7 @@ Inoltre, sulla riga della combinazione dei supersensi abbiamo aggiunto le colonn
 ### Funzione - create_percentage(combination_list, tmp)
 Conta le occorrenze di quella combinazione all'interno delle frasi con la valenza in questione, e crea la percentuale corrispondente, restituendo il tutto ordinato in senso decrescente.
 
-### Risultati
+## Risultati
 ```
 valenza 2 in 2197 frasi.
 
