@@ -1,7 +1,7 @@
 ## Esercitazione #6 - "Let'splay" - False Friends
 
 ### Corpus
-Il corpus è composto da un file (`text_emotion.csv`) contente 40000 tweet su svariati argomenti, preso dal progetto https://github.com/ragesh2000/Emotion-detection , resi un testo solo. Abbiamo scelto un corpus così vasto e vario poiché negli altri che abbiamo provato era difficile trovare parole identiche ma usate con diversi significati, se non impossibile.
+Il corpus è composto da un file (`text_emotion.csv`) contente 40000 tweet su svariati argomenti, preso dal progetto https://github.com/ragesh2000/Emotion-detection , resi una lista di frasi. Abbiamo scelto un corpus così vasto e vario poiché negli altri che abbiamo provato era difficile trovare parole identiche ma usate con diversi significati, se non impossibile.
 
 ### Idea
 Per trovare gli omonimi in un testo abbiamo pensato di usare la libreria lesk, che è in grado di disambiguare una parola dato il contesto in cui è inserita. Inoltre restituisce, grazie al metodo definition(), la definizione del concetto che è stato disambiguato. A questo punto abbiamo creato un dataframe di parole che avessero più di una definizione in tutto il testo con le relative definizioni, e le chiavi di questo dataframe sono i nostri omonimi, o false friends.
