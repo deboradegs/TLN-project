@@ -1,4 +1,4 @@
-## Esercizio #2 - Content-to-Form
+# Esercizio #2 - Content-to-Form
 Usando i dati sulle definizioni date per ogni concetto presente all'interno del file `definizioni.xlsx` estrarre da WordNet il synset più appropriato.
 
 ### Concetti
@@ -27,7 +27,7 @@ A partire dal contesto, vengono presi gli esempi (i lemmi).
 A ciascun synset verrà assegnato uno score, in questo modo:
 viene calcolata l'intersezione degli esempi del contesto del synset con le parole più frequenti, dividendo la lunghezza di questa lista per la lungheza degli esempi + parole più frequenti (tutto senza ripetizioni).
 
-## Funzione print_table()
+## Funzione - print_table()
 Stampa la tabella degli score dei synset per ogni concetto, aggiungendo la definizione.
 
 ### Risultati
