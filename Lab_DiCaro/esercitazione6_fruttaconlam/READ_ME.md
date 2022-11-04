@@ -56,4 +56,3 @@ STOP!
 
     - AI Score: 10
     - AI Words: ['respiratory_system', 'rear', 'rear_end', 'rump']
-elisachierchiello@MBP-di-Elisa esercitazione6_fruttaconlam % 
