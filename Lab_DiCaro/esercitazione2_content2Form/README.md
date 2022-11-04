@@ -1,24 +1,24 @@
 # Esercizio #2 - Content-to-Form
 Usando i dati sulle definizioni date per ogni concetto presente all'interno del file `definizioni.xlsx` estrarre da WordNet il synset più appropriato.
 
-### Concetti
+## Concetti
 Il file `definizioni.xlsx` contenente le definizioni è mappato in un dizionario associando le keys ai concetti.  
 
-### Estrazione dei synset
+## Estrazione dei synset
 I synset sono stati estratti da WordNet seguendo il principio del genus.  
 Date le definizioni, per ogni concetto, abbiamo le 3 parole più frequenti e in seguito per i lemmi di ogni parola abbiamo estratto i synset e gli iponimi dei synset, generando il contesto.  
 
-### Score dei synset
+## Score dei synset
 Per assegnare uno score ai synset abbiamo utilizzato una funzione che identifica la somiglianza tra contesto trovato e parole più frequenti (lo score più alto lo avrà il synset il cui contesto assomiglia di più alle nostre definizioni).
 Da qui, verranno estratti i 5 synset con score più alto.
 
-## Funzione - data_to_dict():
+### Funzione - data_to_dict():
 Questa funzione crea un dizionario nella forma concetto-definizione partendo dal file Excel.
 
-## Funzione - frequency(dictionary, frequenza)
+##] Funzione - frequency(dictionary, frequenza)
 Restituisce un dizionario che per ogni concetto ha le |frequenza| parole più frequenti per ogni definizione.
 
-## Funzione - get_synset_context()
+### Funzione - get_synset_context()
 Preso ogni concetto: 
 per ogni parola più frequente viene creata una lista di synset;
 per ogni synset viene creata una lista di iponimi;
@@ -27,10 +27,10 @@ A partire dal contesto, vengono presi gli esempi (i lemmi).
 A ciascun synset verrà assegnato uno score, in questo modo:
 viene calcolata l'intersezione degli esempi del contesto del synset con le parole più frequenti, dividendo la lunghezza di questa lista per la lungheza degli esempi + parole più frequenti (tutto senza ripetizioni).
 
-## Funzione - print_table()
+### Funzione - print_table()
 Stampa la tabella degli score dei synset per ogni concetto, aggiungendo la definizione.
 
-### Risultati
+## Risultati
 ```
 ----- Best 5 sense for Emotion -----
 
