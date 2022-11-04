@@ -6,6 +6,7 @@ Il corpus è composto da un file (`text_emotion.csv`) contente 40000 tweet su sv
 ### Idea
 Per trovare gli omonimi in un testo abbiamo pensato di usare la libreria lesk, che è in grado di disambiguare una parola dato il contesto in cui è inserita. Inoltre restituisce, grazie al metodo definition(), la definizione del concetto che è stato disambiguato. A questo punto abbiamo creato un dataframe di parole che avessero più di una definizione in tutto il testo con le relative definizioni, e le chiavi di questo dataframe sono i nostri omonimi, o false friends.
 ```
+....
  'fix': ['decide upon or fix definitely', 'the act of putting something in working order again'],
  'flag': ['provide with a flag', 'decorate with flags'],
  'flake': ['a small fragment of something broken off from the whole', 'come off in flakes or thin small pieces'],
