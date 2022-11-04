@@ -16,7 +16,7 @@ Le linee di taglio verranno posizionate nei punti di minimi assoluti. Queste lin
 ----- GRAFICO DELLA SIMILARITA' CON SEGNATI I MINIMI (NONCHE' PUNTI DI TAGLIO)------
 
 ![Figure_1](https://user-images.githubusercontent.com/66359850/199958554-349ebe51-ae8c-40fb-aedc-986968bb98b7.png)
-```
+
 
 ----- SEGMENTAZIONE FINALE-----
 
@@ -58,14 +58,14 @@ Cars have controls for driving, parking, passenger comfort, and a variety of lig
  from prehistory to the 21st century are being exhibited over an area of 72,735 square meters (782,910 square feet).  Attendance in 2021 was 2.8 million due to the COVID-19 pandemic, up five percent from 2020, but far below pre-COVID attendance. Nonetheless, the Louvre still topped the list of most-visited art museums in the world in 2021.The museum is housed in the Louvre Palace, originally built in the late 12th to 13th century under Philip II. Remnants of the Medieval Louvre fortress are visible in the basement of the museum. Due to urban expansion, the fortress eventually lost its defensive function, and in 1546 Francis I converted it into the primary residence of the French Kings. The building was extended many times to form the present Louvre Palace. In 1682, Louis XIV chose the Palace of Versailles for his household, leaving the Louvre primarily as a place to display the royal collection, including, from 1692, a collection of ancient Greek and Roman sculpture. In 1692, the building was occupied by the Académie des Inscriptions et Belles-Lettres and the Académie Royale de Peinture et de Sculpture, which in 1699 held the first of a series of salons. The Académie remained at the Louvre for 100 years. During the French Revolution, the National Assembly decreed that the Louvre should be used as a museum to display the nation's masterpieces.
 The museum opened on 10 August 1793 with an exhibition of 537 paintings, the majority of the works being royal and confiscated church property. Because of structural problems with the building, the museum was closed in 1796 until 1801. The collection was increased under Napoleon and the museum was renamed Musée Napoléon, but after Napoleon's abdication, many works seized by his armies were returned to their original owners. The collection was further increased during the reigns of Louis XVIII and Charles X, and during the Second French Empire the museum gained 20,000 pieces. Holdings have grown steadily through donations and bequests since the Third Republic. The collection is divided among eight curatorial departments: Egyptian Antiquities; Near Eastern Antiquities; Greek, Etruscan, and Roman Antiquities; Islamic Art; Sculpture; Decorative Arts; Paintings; Prints and Drawings.
 The Musée du Louvre contains more than 380,000 objects and displays 35,000 works of art in eight curatorial departments with more than 60,600 square metres (652,000 sq ft) dedicated to the permanent collection. The Louvre exhibits sculptures, objets d'art, paintings, drawings, and archaeological finds.
-```
+
 
 
 ### Risultati con Chocolate, Cream e Icecream
 
 ----- GRAFICO DELLA SIMILARITA' CON SEGNATI I MINIMI (NONCHE' PUNTI DI TAGLIO)------
 ![Figure_1](https://user-images.githubusercontent.com/66359850/199960749-1c1eb365-e72c-436c-8211-203faad3a0ec.png)
-```
+
 ----- SEGMENTAZIONE FINALE-----
 
 
@@ -102,7 +102,7 @@ Cream produced by cattle (particularly Jersey cattle) grazing on natural pasture
  in addition to stabilizers. The mixture is cooled below the freezing point of water and  stirred to incorporate air spaces and to prevent detectable ice crystals from forming. The result is a smooth, semi-solid foam that is solid at very low temperatures (below 2 °C or 35 °F). It becomes more malleable as its temperature increases.
 The meaning of the name "ice cream" varies from one country to another. In some countries, such as the United States, "ice cream" applies only to a specific variety, and most governments regulate the commercial use of the various terms according to the relative quantities of the main ingredients, notably the amount of cream. Products that do not meet the criteria to be called ice cream are sometimes labelled "frozen dairy dessert" instead. In other countries, such as Italy and Argentina, one word is used for all variants. Analogues made from dairy alternatives, such as goat's or sheep's milk, or milk substitutes (e.g., soy, cashew, coconut,  almond milk or tofu), are available for those who are lactose intolerant, allergic to dairy protein, or vegan.
 Ice cream may be served in dishes, for eating with a spoon, or licked from edible wafer cones. Ice cream may be served with other desserts, such as apple pie, or as an ingredient in ice cream floats, sundaes, milkshakes, ice cream cakes and even baked items, such as Baked Alaska.
-```
+
 ### Considerazioni finali
 
 La precisione della segmentazione dipende sì dall'efficacia dell'algoritmo, ma anche dal testo che viene preso. In Chocolate vediamo che viene fatta una segmentazione prematura del paragrafo, poiché passa dal parlare di "chocolate" a "cocoa" e non li ritiene quindi lo stesso argomento. Forse per ottimizzare il procedimento bisognerebbe aggiungere un parametro di similarità tra concetti, dove quindi ricalibreremmo la cosine similarity non solo per quanto le stringhe si possono sovrapporre, ma anche quanto i concetti di parole diverse sono simili.
