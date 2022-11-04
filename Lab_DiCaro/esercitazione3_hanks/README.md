@@ -1,19 +1,19 @@
-## Esercizio #3 - Hanks 
+# Esercizio #3 - Hanks 
 Implementazione della teoria sulle valenze di Patrick Hanks
 
-### Verbo
+## Verbo
 Per svolgere l'esercitazione è stato scelto il verbo transitivo *get*.  
 
-### Corpus
+## Corpus
 Dalla piattaforma ***[Sketch Engine](https://www.sketchengine.eu/)*** abbiamo recuperato le prime 10.000 frasi ordinate per ***GDEX (Good Dictionary Examples)***.  
 GDEX è un sistema di valutazione delle frasi in relazione alla loro idoneità a fungere da esempi di dizionario o da buoni esempi a fini didattici.  
 All'interno della directory resource è disponibile si il file completo `get.csv` sia una versione ridotta  
 `get_small.csv` contenente le prime 1000 frasi.
 
-### Parsing
+## Parsing
 La fase di parsing è stata realizzata con l'uso della libreria ***[SpaCy](https://spacy.io/)*** tramite un parsing a dipendenze per ogni frase in modo da estrarre i due argomenti: ***subj e obj***.
 
-### Disambiguazione
+## Disambiguazione
 La disambiguazione di ogni argomento viene effettuata tramite l'algoritmo di Lesk usando la frase di appartenenza come contesto.  
 In seguito, il synset fornito da Lesk viene utilizzato per estrarre il suo super-senso da ***[CSI (Coarse Sense Inventory)](https://sapienzanlp.github.io/csi/)***.  
 All'interno della directory resource è disponibile il file `wn_synset2csi.txt` contenente il mapping tra wordnet e le label CSI, e ogni synset è individuato attraverso il proprio offset. 
@@ -21,24 +21,24 @@ All'interno della directory resource è disponibile il file `wn_synset2csi.txt` 
 ## Supersensi
 I super-sensi ottenuti vengono raggruppati per calcolarne la frequenza, e questo procedimento è applicato sia alle frasi con solo un argomento (*None-obj* oppure *sub-None*) che alle frasi con entrambi gli argomenti.
 
-# Funzione - get_supersense_from_file()
+### Funzione - get_supersense_from_file()
 Apre il file `wn_synset2csi.txt` e crea un dizionario con chiave: identificativo in Wordnet della parola e valore: supersenso corrispondente
 
-# Funzione - get_sentences_from_file()
+### Funzione - get_sentences_from_file()
 Apre il file `get.csv` e crea una lista contenente le frasi all'interno del file (estratte da SketchEngine)
 
-# Funzione - parser_verbs(sentences, verbo)
+### Funzione - parser_verbs(sentences, verbo)
 Per ogni frase raccolta, crea un dizionario con l'analisi effettuata da spacy, aggiungendo il supersenso (*get_supersense*) del soggetto e il supersenso dell'oggetto.
 Restituisce una lista di dizionari di ogni frase.
 
-# Funzione - get_supersense(sentence, word)
+### Funzione - get_supersense(sentence, word)
 Dopo aver disambiguato la parola all'interno della frase specificata come argomento attraverso la funzione *lesk*, viene raccolto l'offset del synset della parola disambiguata, e viene cercato il synset trovato all'interno del dizionario *csi_dict*
 
-# Funzione - meanings(sentence_analysis)
+### Funzione - meanings(sentence_analysis)
 Crea 3 tabelle: una per le frasi con valenza 2, e due per le frasi con valenza 1 (sub e obj), dove in ogni riga c'è la combinazione dei due supersensi (o del supersenso e None, nel caso di valenza 1), in più viene fatto un conteggio delle frasi trovate con i 3 tipi di valenza differenti.
 Inoltre, sulla riga della combinazione dei supersensi abbiamo aggiunto le colonne conteggio e percentuale (*create_percentage*), per indicare quanto è presente quella combinazione nel corpus di frasi.
 
-# Funzione - create_percentage(combination_list, tmp)
+### Funzione - create_percentage(combination_list, tmp)
 Conta le occorrenze di quella combinazione all'interno delle frasi con la valenza in questione, e crea la percentuale corrispondente, restituendo il tutto ordinato in senso decrescente.
 
 ### Risultati
