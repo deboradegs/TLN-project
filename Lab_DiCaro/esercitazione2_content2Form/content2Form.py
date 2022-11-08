@@ -14,7 +14,7 @@ def data_to_dict():
 
 def stem_lem(text):
     lemmatizer = WordNetLemmatizer()
-    stemming = SnowballStemmer('english')
+    #stemming = SnowballStemmer('english')
     stop_words = stopwords.words('english')
     stop_words.extend(['someone', 'something', 'e', 'e.g', 'u', 'ha', 'e.i', 'others', "'s"])
     string_punctuation = string.punctuation + '’'
@@ -40,7 +40,7 @@ df_dict = data_to_dict()
 concept_common_words = frequency(df_dict, 3)
 
 
-def get_synset_context():
+def get_synset_score():
     synset_context = dict()
     synset_score = dict()
     for concept, words in concept_common_words.items():
@@ -57,6 +57,7 @@ def get_synset_context():
         for synset in synset_list:
             context_list = list()
             context_list.extend(stem_lem(synset.definition()))
+            #print(context_list)
             for example in synset.examples():
                 context_list.extend(stem_lem(example))
             context_list = list(dict.fromkeys(context_list))  
@@ -65,12 +66,14 @@ def get_synset_context():
         sortedDict = list()
         for synset, contexts in synset_context.items():
             overlap = set(contexts) & set(words)
-            score_dict[synset] = round(float(len(overlap)) / (len(set(contexts) | set(words))),3)
+            #print(len(overlap))
+            score_dict[synset] = round(float(len(overlap) / (len(set(contexts) | set(words)))),3)
+            #score_dict[synset] = round(float((len(overlap)) / (len(set(words)))),3)
         sortedDict = sorted(score_dict.items(), key=lambda x: x[1], reverse=True)[:5]
         synset_score[concept] = sortedDict
     return synset_score
 
-synset_score = get_synset_context()
+synset_score = get_synset_score()
 
 
 def print_table(synset_score: dict):
