@@ -15,7 +15,7 @@ Pulisce il testo da stop_words, punteggiatura e maiuscole e lo tokenizza, tuttav
 
 
 ### Funzione - frequency(dictionary, num_common_word)
-Calcola la frequenza dei token nel testo e ritorna le prime num_common_word parole più frequenti
+Calcola la frequenza dei token nel testo e ritorna un dizionario con le prime num_common_word parole più frequenti per ogni concetto.
 
 ### Funzione - word_in_sentence(dictionary, frequency)
 Calcola lo score delle parole più frequenti. L'idea è quella di contare in quante definizioni del nostro concetto la parolaè presente, lo score di ogni parola sarà quindi data dalla distribuzione della parola tra le definizioni (se una parola è presente in tutte le definizioni lo score sarà massimo).
