@@ -2,7 +2,7 @@
 
 ### Concetti
 All'interno della directory resource è presente il file `definizioni.xlsx` contenente un numero finito di definizioni per ogni concetto.  
-I concetti da analizzare si dividono in due categorie:
+I concetti da analizzare presentano la seguente suddivisione:
 - Concreti:
   - Person (generico)
   - Brick (specifico)
