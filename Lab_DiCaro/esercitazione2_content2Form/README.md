@@ -5,7 +5,7 @@ Usando i dati sulle definizioni date per ogni concetto presente all'interno del 
 Il file `definizioni.xlsx` contenente le definizioni è mappato in un dizionario associando le keys ai concetti.  
 
 ## Estrazione dei synset
-I synset sono stati estratti da WordNet seguendo il principio del genus.  
+I synset sono stati estratti da WordNet.  
 Date le definizioni, per ogni concetto, abbiamo le 3 parole più frequenti e in seguito per i lemmi di ogni parola abbiamo estratto i synset e gli iponimi dei synset, generando il contesto.  
 
 ## Score dei synset
@@ -22,10 +22,9 @@ Restituisce un dizionario che per ogni concetto ha le |frequenza| parole più fr
 Preso ogni concetto: 
 per ogni parola più frequente viene creata una lista di synset;
 per ogni synset viene creata una lista di iponimi;
-per ogni synset e iponimo viene generato il contesto.
-A partire dal contesto, vengono presi gli esempi (i lemmi).
+per ogni synset e iponimo viene generato il contesto (lemmatizzazione di definizione + esempi).
 A ciascun synset verrà assegnato uno score, in questo modo:
-viene calcolata l'intersezione degli esempi del contesto del synset con le parole più frequenti, dividendo la lunghezza di questa lista per la lungheza degli esempi + parole più frequenti (tutto senza ripetizioni).
+viene calcolata l'intersezione tra le parole del contesto del synset in considerazione con le parole più frequenti, dividendo la lunghezza di questa lista per la lungheza della lista contesto + parole più frequenti (tutto senza ripetizioni).
 
 ### Funzione - print_table()
 Stampa la tabella degli score dei synset per ogni concetto, aggiungendo la definizione.
