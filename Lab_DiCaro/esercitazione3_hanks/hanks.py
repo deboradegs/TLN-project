@@ -109,4 +109,4 @@ def create_percentage(combination_list, tmp):
                                     'percentage' : percentage_list}
     return sorted_combination_dict
 
-meanings = meanings(sentence_analysis)
+meanings_call = meanings(sentence_analysis)
