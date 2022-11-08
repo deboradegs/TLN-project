@@ -5,26 +5,28 @@ Usando i dati sulle definizioni date per ogni concetto presente all'interno del 
 Il file `definizioni.xlsx` contenente le definizioni è mappato in un dizionario associando le keys ai concetti.  
 
 ## Estrazione dei synset
-I synset sono stati estratti da WordNet.  
-Date le definizioni, per ogni concetto, abbiamo le 3 parole più frequenti e in seguito per i lemmi di ogni parola abbiamo estratto i synset e gli iponimi dei synset, generando il contesto.  
+I synset sono stati estratti da WordNet seguendo il principio del genus.  
+Date le definizioni, per ogni concetto, estraiamo il lemma delle num_common_word parole più frequenti. 
+Per ogni parola più frequente di ogni concetto, attraverso WordNet, estraggo i synset e da questi gli iponimi. Da questa lista prendendo la definizione e gli esempi di ogni componente, vado a creare il contesto.
 
 ## Score dei synset
 Per assegnare uno score ai synset abbiamo utilizzato una funzione che identifica la somiglianza tra contesto trovato e parole più frequenti (lo score più alto lo avrà il synset il cui contesto assomiglia di più alle nostre definizioni).
 Da qui, verranno estratti i 5 synset con score più alto.
 
 ### Funzione - data_to_dict():
-Questa funzione crea un dizionario nella forma concetto-definizione partendo dal file Excel.
+Questa funzione crea un dizionario nella forma [concetto-lista definizioni] partendo dal file Excel.
 
-##] Funzione - frequency(dictionary, frequenza)
-Restituisce un dizionario che per ogni concetto ha le |frequenza| parole più frequenti per ogni definizione.
+### Funzione - frequency(dictionary, num_common_word)
+Restituisce un dizionario in cui ogni concetto è assegnato alle num_common_word parole più frequenti nelle rispettive definizioni.
 
-### Funzione - get_synset_context()
+### Funzione - get_synset_score()
 Preso ogni concetto: 
-per ogni parola più frequente viene creata una lista di synset;
+per ogni parola più frequente per quel concetto viene creata una lista di synset;
 per ogni synset viene creata una lista di iponimi;
-per ogni synset e iponimo viene generato il contesto (lemmatizzazione di definizione + esempi).
-A ciascun synset verrà assegnato uno score, in questo modo:
-viene calcolata l'intersezione tra le parole del contesto del synset in considerazione con le parole più frequenti, dividendo la lunghezza di questa lista per la lungheza della lista contesto + parole più frequenti (tutto senza ripetizioni).
+per ogni synset e iponimo viene generato il contesto.
+A partire dal contesto, vengono presi gli esempi.
+A ciascun synset verrà assegnato uno score nel seguente modo:
+viene calcolata l'intersezione tra gli esempi del contesto del synset e le parole più frequenti per quel concetto, dividendo la lunghezza di questa lista (per la lungheza degli esempi unita alla lunghezza della lista di parole più frequenti OPPURE per num_common_word, ovvero il numero di parole più frequenti considerate).
 
 ### Funzione - print_table()
 Stampa la tabella degli score dei synset per ogni concetto, aggiungendo la definizione.
@@ -97,3 +99,4 @@ Stampa la tabella degli score dei synset per ogni concetto, aggiungendo la defin
 ├──────────────────────────────────┼───────────────────────────────────────────────────┼─────────┤
 │ Synset('coloring_material.n.01') │ Any material used for its color                   │   0.333 │
 ╘══════════════════════════════════╧═══════════════════════════════════════════════════╧═════════╛
+
