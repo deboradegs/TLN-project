@@ -57,7 +57,6 @@ def get_synset_score():
         for synset in synset_list:
             context_list = list()
             context_list.extend(stem_lem(synset.definition()))
-            #print(context_list)
             for example in synset.examples():
                 context_list.extend(stem_lem(example))
             context_list = list(dict.fromkeys(context_list))  
@@ -66,8 +65,6 @@ def get_synset_score():
         sortedDict = list()
         for synset, contexts in synset_context.items():
             overlap = set(contexts) & set(words)
-            #print(len(overlap))
-            #score_dict[synset] = round(float(len(overlap) / (len(set(contexts) | set(words)))),3)
             score_dict[synset] = round(float((len(overlap)) / (len(set(words)))),3)
         sortedDict = sorted(score_dict.items(), key=lambda x: x[1], reverse=True)[:5]
         synset_score[concept] = sortedDict
