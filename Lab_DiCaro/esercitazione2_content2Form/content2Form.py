@@ -67,8 +67,8 @@ def get_synset_score():
         for synset, contexts in synset_context.items():
             overlap = set(contexts) & set(words)
             #print(len(overlap))
-            score_dict[synset] = round(float(len(overlap) / (len(set(contexts) | set(words)))),3)
-            #score_dict[synset] = round(float((len(overlap)) / (len(set(words)))),3)
+            #score_dict[synset] = round(float(len(overlap) / (len(set(contexts) | set(words)))),3)
+            score_dict[synset] = round(float((len(overlap)) / (len(set(words)))),3)
         sortedDict = sorted(score_dict.items(), key=lambda x: x[1], reverse=True)[:5]
         synset_score[concept] = sortedDict
     return synset_score
