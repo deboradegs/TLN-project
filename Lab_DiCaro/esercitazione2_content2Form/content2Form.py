@@ -96,39 +96,31 @@ def get_synset_score_disamb():
         #synset_list = list(dict.fromkeys(synset_list))
         hyponyms_list = list()
         for synset in synset_list:
-          hyponyms_list.extend(synset.hyponyms())
-        hyponyms_list = list(dict.fromkeys(hyponyms_list))
-        synset_list.extend(hyponyms_list)
-        synset_list = list(dict.fromkeys(synset_list))
-        context_list = list()
-        for synset in synset_list:
+            hyponyms_list.extend(synset.hyponyms())
+            context_list = list()
+            for hypon in hyponyms_list:
+                context_list.extend(stem_lem(hypon.definition()))
+                for example in hypon.examples():
+                    context_list.extend(stem_lem(example))
             context_list.extend(stem_lem(synset.definition()))
             for example in synset.examples():
-                context_list.extend(stem_lem(example))
-            context_list = list(dict.fromkeys(context_list))
+                    context_list.extend(stem_lem(example))
+            # counts = Counter(context_list)
+            # synset_context[synset] = heapq.nlargest(10, counts, key=counts.get)
             synset_context[synset] = context_list
-        # print('il contesto èèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèèè')
-        # print(context_list)
-        # counts = Counter(context_list)
-        # migliori = heapq.nlargest(5, counts, key=counts.get)
-       
-        # print('Le migliori sonoooooooooooooooooooooooooooooooo')
-        # print(migliori)
-            score_dict = dict()
-            sortedDict = list()
-            for synset, contexts in synset_context.items():
-                overlap = set(contexts) & set(lemma_score_list)
-                score_dict[synset] = round(float(len(overlap) / (len(set(contexts) | set(lemma_score_list)))),3)
-                #score_dict[synset] = round(float((len(overlap)) / (len(set(lemma_score_list)))),3)
-            sortedDict = sorted(score_dict.items(), key=lambda x: x[1], reverse=True)[:5]
-            synset_score[concept] = sortedDict
+        #print(synset_context)
+        score_dict = dict()
+        sortedDict = list()
+        for synset, contexts in synset_context.items():
+            overlap = set(contexts) & set(lemma_score_list)
+            score_dict[synset] = round(float(len(overlap) / (len(set(contexts) | set(lemma_score_list)))),3)
+            #score_dict[synset] = round(float((len(overlap)) / (len(set(lemma_score_list)))),3)
+        sortedDict = sorted(score_dict.items(), key=lambda x: x[1], reverse=True)[:5]
+        synset_score[concept] = sortedDict
+        #print(synset_score)
     return synset_score
             
 synset_score= get_synset_score_disamb()
-
-
-
-
 
 # def print_table1(synset_score: dict):
 #     for concept, synsets in synset_score.items():
