@@ -6,98 +6,28 @@ Il file `definizioni.xlsx` contenente le definizioni è mappato in un dizionario
 
 ## Estrazione dei synset
 I synset sono stati estratti da WordNet seguendo il principio del genus.  
-Date le definizioni, per ogni concetto, estraiamo il lemma delle num_common_word parole più frequenti. 
-Per ogni parola più frequente di ogni concetto, attraverso WordNet, estraggo i synset e da questi gli iponimi. Da questa lista prendendo la definizione e gli esempi di ogni componente, vado a creare il contesto.
+Prenderemo in considerazione solo i synset più frequenti dalla disambiguazione con iperonimi in comune. 
 
 ## Score dei synset
-Per assegnare uno score ai synset abbiamo utilizzato una funzione che identifica la somiglianza tra contesto trovato e parole più frequenti (lo score più alto lo avrà il synset il cui contesto assomiglia di più alle nostre definizioni).
+Per assegnare uno score ai synset abbiamo utilizzato una funzione che identifica la somiglianza tra contesto trovato dai synset e parole più frequenti (lo score più alto lo avrà il synset il cui contesto assomiglia di più alle nostre definizioni).
 Da qui, verranno estratti i 5 synset con score più alto.
 
 ### Funzione - data_to_dict():
 Questa funzione crea un dizionario nella forma [concetto-lista definizioni] partendo dal file Excel.
 
-### Funzione - frequency(dictionary, num_common_word)
-Restituisce un dizionario in cui ogni concetto è assegnato alle num_common_word parole più frequenti nelle rispettive definizioni.
+### Funzione - disambiguation(dictionary, num_common_word)
+Effettua la disambiguazione (lesk) di ogni parola delle definizioni all'interno della definizione di appartenenza.
+Presi i 5 synset più frequenti della disambiguazione (per ogni concetto), ne prende gli iperonimi. 
+Restituisce un dizionario in cui per ogni concetto vengono salvati i 5 synset più comuni e il rispettivo iperonimo.
 
-### Funzione - get_synset_score()
+### Funzione - get_synset_score_disamb()
 Preso ogni concetto: 
-per ogni parola più frequente per quel concetto viene creata una lista di synset;
-per ogni synset viene creata una lista di iponimi;
-per ogni synset e iponimo viene generato il contesto.
-A partire dal contesto, vengono presi gli esempi.
-A ciascun synset verrà assegnato uno score nel seguente modo:
-viene calcolata l'intersezione tra gli esempi del contesto del synset e le parole più frequenti per quel concetto, dividendo la lunghezza di questa lista per num_common_word, ovvero il numero di parole più frequenti considerate.
+per ogni synset più frequente per quel concetto viene presa la parola corrispondente (da synset a parola con lemma.name()), e ne viene creata una lista di synset;
+per ogni synset della parola viene trovato l'iperonimo;
+vengono confrontati gli iperonimi della parola disambiguata con gli iperonimi dei synset della disambiguazione e vengono presi soltanto i synset con iperonimo in comune (genus);
+per ogni synset salvato con genus in comune, vengono presi gli iponimi e dagli iponimi viene generato il contesto (definizione lemmatizzata e esempi lemmatizzati).
+A ciascun synset (con genus in comune) verrà assegnato uno score nel seguente modo:
+viene calcolata l'intersezione tra il contesto del synset e le parole disambiguate più frequenti per quel concetto, dividendo la lunghezza di questa lista per num_common_word, ovvero il numero di parole più frequenti considerate.
 
 ### Funzione - print_table()
 Stampa la tabella degli score dei synset per ogni concetto, aggiungendo la definizione.
-
-## Risultati
-```
-
------ Best 5 sense for Emotion -----
-
-╒═══════════════════════════╤══════════════════════════════════════════════════════════════════════════════════════════╤═════════╕
-│ Synset                    │ Definition                                                                               │   Score │
-╞═══════════════════════════╪══════════════════════════════════════════════════════════════════════════════════════════╪═════════╡
-│ Synset('feel.v.05')       │ Have a feeling or perception about oneself in reaction to someone's behavior or attitude │   0.667 │
-├───────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────┼─────────┤
-│ Synset('affection.n.01')  │ A positive feeling of liking                                                             │   0.667 │
-├───────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────┼─────────┤
-│ Synset('feeling.n.01')    │ The experiencing of affective and emotional states                                       │   0.333 │
-├───────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────┼─────────┤
-│ Synset('impression.n.01') │ A vague idea in which some confidence is placed                                          │   0.333 │
-├───────────────────────────┼──────────────────────────────────────────────────────────────────────────────────────────┼─────────┤
-│ Synset('spirit.n.02')     │ The general atmosphere of a place or situation and the effect that it has on people      │   0.333 │
-╘═══════════════════════════╧══════════════════════════════════════════════════════════════════════════════════════════╧═════════╛
-
-
------ Best 5 sense for Person -----
-
-╒═══════════════════════╤══════════════════════════════════════════════════╤═════════╕
-│ Synset                │ Definition                                       │   Score │
-╞═══════════════════════╪══════════════════════════════════════════════════╪═════════╡
-│ Synset('human.a.02')  │ Relating to a person                             │   0.667 │
-├───────────────────────┼──────────────────────────────────────────────────┼─────────┤
-│ Synset('world.n.08')  │ All of the living human inhabitants of the earth │   0.667 │
-├───────────────────────┼──────────────────────────────────────────────────┼─────────┤
-│ Synset('person.n.01') │ A human being                                    │   0.667 │
-├───────────────────────┼──────────────────────────────────────────────────┼─────────┤
-│ Synset('person.n.02') │ A human body (usually including the clothing)    │   0.667 │
-├───────────────────────┼──────────────────────────────────────────────────┼─────────┤
-│ Synset('living.a.01') │ Pertaining to living persons                     │   0.667 │
-╘═══════════════════════╧══════════════════════════════════════════════════╧═════════╛
-
-
------ Best 5 sense for Revenge -----
-
-╒════════════════════════════╤═════════════════════════════════════════════╤═════════╕
-│ Synset                     │ Definition                                  │   Score │
-╞════════════════════════════╪═════════════════════════════════════════════╪═════════╡
-│ Synset('dander.n.02')      │ A feeling of anger and animosity            │   0.667 │
-├────────────────────────────┼─────────────────────────────────────────────┼─────────┤
-│ Synset('fury.n.01')        │ A feeling of intense anger                  │   0.667 │
-├────────────────────────────┼─────────────────────────────────────────────┼─────────┤
-│ Synset('indignation.n.01') │ A feeling of righteous anger                │   0.667 │
-├────────────────────────────┼─────────────────────────────────────────────┼─────────┤
-│ Synset('infuriation.n.01') │ A feeling of intense anger                  │   0.667 │
-├────────────────────────────┼─────────────────────────────────────────────┼─────────┤
-│ Synset('umbrage.n.01')     │ A feeling of anger caused by being offended │   0.667 │
-╘════════════════════════════╧═════════════════════════════════════════════╧═════════╛
-
-
------ Best 5 sense for Brick -----
-
-╒══════════════════════════╤═════════════════════════════════════════════════════════════════════════════════════════════════╤═════════╕
-│ Synset                   │ Definition                                                                                      │   Score │
-╞══════════════════════════╪═════════════════════════════════════════════════════════════════════════════════════════════════╪═════════╡
-│ Synset('material.n.01')  │ The tangible substance that goes into the makeup of a physical object                           │   0.667 │
-├──────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┤
-│ Synset('material.n.02')  │ Information (data or ideas or observations) that can be used or reworked into a finished form   │   0.667 │
-├──────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┤
-│ Synset('moon.n.02')      │ Any object resembling a moon                                                                    │   0.667 │
-├──────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┤
-│ Synset('property.n.05')  │ Any movable articles or objects used on the set of a play or movie                              │   0.667 │
-├──────────────────────────┼─────────────────────────────────────────────────────────────────────────────────────────────────┼─────────┤
-│ Synset('aggregate.n.02') │ Material such as sand or gravel used with cement and water to make concrete, mortar, or plaster │   0.667 │
-╘══════════════════════════╧═════════════════════════════════════════════════════════════════════════════════════════════════╧═════════╛
-
