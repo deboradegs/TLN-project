@@ -8,6 +8,7 @@ from collections import Counter
 from tabulate import tabulate
 import heapq
 from nltk.wsd import lesk
+import pprint
 
 
 def data_to_dict():
@@ -59,9 +60,6 @@ def disambiguation(dictionary: dict, num_common_word):
 
 df_dict = data_to_dict()
 concept_common_words, concept_common_synset= disambiguation(df_dict, 4)
-# print()
-# print(concept_common_synset)
-# print()
 
 
 def get_synset_score_disamb():
@@ -72,28 +70,17 @@ def get_synset_score_disamb():
         lemma_score_list = list()
         for syns, hyper in dicts.items():     
             lemma_list = list()
-            #print(syns.lemmas())
             [lemma_list.append(str(lemma.name())) for lemma in syns.lemmas()]
             lemma_score_list.append(lemma_list[0])
             synsets_lemma = wn.synsets(lemma_list[0])
-            # print('yooooooooooooooooooooooooooooooooooooooo')
-            # print(synsets_lemma)
             for sn in synsets_lemma:
                 hyper_list_tmp = sn.hypernyms()
                 if not hyper_list_tmp:
                     hyper_tmp=sn
                 else:
                     hyper_tmp=hyper_list_tmp[0]
-                # print()
-                # print(hyper_tmp)
-                # print(dicts[syns])
                 if hyper_tmp == dicts[syns]:
-                    # print('ENTRATO')
                     synset_list.append(sn)
-        # print()
-        # print(lemma_score_list)
-        # print(synset_list)
-        #synset_list = list(dict.fromkeys(synset_list))
         hyponyms_list = list()
         for synset in synset_list:
             hyponyms_list.extend(synset.hyponyms())
@@ -106,71 +93,19 @@ def get_synset_score_disamb():
             for example in synset.examples():
                     context_list.extend(stem_lem(example))
             # counts = Counter(context_list)
-            # synset_context[synset] = heapq.nlargest(10, counts, key=counts.get)
+            # synset_context[synset] = heapq.nlargest(5, counts, key=counts.get)
             synset_context[synset] = context_list
-        #print(synset_context)
         score_dict = dict()
         sortedDict = list()
         for synset, contexts in synset_context.items():
             overlap = set(contexts) & set(lemma_score_list)
-            score_dict[synset] = round(float(len(overlap) / (len(set(contexts) | set(lemma_score_list)))),3)
-            #score_dict[synset] = round(float((len(overlap)) / (len(set(lemma_score_list)))),3)
+            #score_dict[synset] = round(float(len(overlap) / (len(set(contexts) | set(lemma_score_list)))),3)
+            score_dict[synset] = round(float((len(overlap)) / (len(set(lemma_score_list)))),3)
         sortedDict = sorted(score_dict.items(), key=lambda x: x[1], reverse=True)[:5]
         synset_score[concept] = sortedDict
-        #print(synset_score)
     return synset_score
             
 synset_score= get_synset_score_disamb()
-
-# def print_table1(synset_score: dict):
-#     for concept, synsets in synset_score.items():
-#             to_print = dict()
-#             for synset in synsets:
-#                 synset_name = str(synset[0])
-#                 to_print[synset_name] = {'Definition': synset[0].definition().capitalize(), 'Score': synset[1]}
-#             table = pd.DataFrame.from_dict(to_print, orient='index')
-#             print()
-#             print(f'----- Best 5 sense for {concept} -----')
-#             print()
-#             print(tabulate(table, headers=['Synset', 'Definition', 'Score'], tablefmt='fancy_grid'))
-#             print()
-
-
-
-# def get_synset_score():
-#     synset_context = dict()
-#     synset_score = dict()
-#     for concept, words in concept_common_words.items():
-#         synset_list = list()
-#         for word in words:
-#             synset_list.extend(wn.synsets(word))
-#         synset_list = list(dict.fromkeys(synset_list))
-#         hyponyms_list = list()
-#         for synset in synset_list:
-#            hyponyms_list.extend(synset.hyponyms())
-#         hyponyms_list = list(dict.fromkeys(hyponyms_list))
-#         synset_list.extend(hyponyms_list)
-#         synset_list = list(dict.fromkeys(synset_list))
-#         for synset in synset_list:
-#             context_list = list()
-#             context_list.extend(stem_lem(synset.definition()))
-#             for example in synset.examples():
-#                 context_list.extend(stem_lem(example))
-#             context_list = list(dict.fromkeys(context_list))  
-#             synset_context[synset] = context_list
-#         score_dict = dict()
-#         sortedDict = list()
-#         for synset, contexts in synset_context.items():
-#             overlap = set(contexts) & set(words)
-#             #print(len(overlap))
-#             score_dict[synset] = round(float(len(overlap) / (len(set(contexts) | set(words)))),3)
-#             #score_dict[synset] = round(float((len(overlap)) / (len(set(words)))),3)
-#         sortedDict = sorted(score_dict.items(), key=lambda x: x[1], reverse=True)[:5]
-#         synset_score[concept] = sortedDict
-#     return synset_score
-
-# synset_score2 = get_synset_score()
-
 
 def print_table(synset_score: dict):
     for concept, synsets in synset_score.items():
@@ -182,9 +117,7 @@ def print_table(synset_score: dict):
         print()
         print(f'----- Best 5 sense for {concept} -----')
         print()
-        print(tabulate(table, headers=['Synset', 'Definition', 'Score'], tablefmt='fancy_grid'))
+        pprint.pprint(table)
         print()
-
-#print_table(synset_score2)
 
 print_table(synset_score)
