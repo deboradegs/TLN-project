@@ -14,6 +14,8 @@ from nltk.wsd import lesk
 import wn
 import pandas as pd
 from tabulate import tabulate
+import pprint
+import numpy as np
 
 def stem_lem(text):
     lemmatizer = WordNetLemmatizer()
@@ -64,10 +66,11 @@ def extract_false_friends(text_splitted):
         couple_definitions = []
         #for word in splitted_sent:
         for word in sent:
-            answer = lesk(sent,word)
-            if answer is not None:
-                definition = answer.definition()
-                couples.append((word, definition))
+            if word not in stop_words:
+                answer = lesk(sent,word)
+                if answer is not None:
+                    definition = answer.definition()
+                    couples.append((word, definition))
 
     word_definition = dict(couples)
     more_than_a_definition = dict()
@@ -81,9 +84,9 @@ def extract_false_friends(text_splitted):
         if len(res[key])>1:
            more_than_a_definition[key] = res[key]
 
-    table2 = pd.DataFrame.from_dict(more_than_a_definition, orient= 'index')
-    print(tabulate(table2, headers=['Word', 1, 2, 3, 4], tablefmt="plain"))
-
+    #table2 = pd.DataFrame.from_dict(more_than_a_definition, orient= 'index')
+    #print(more_than_a_definition)
+    pprint.pprint(more_than_a_definition, width=40000)
 
             
 
