@@ -38,6 +38,7 @@ Abbiamo notato che in molte definizioni è presente il genus e quindi, per come 
 Per il principio del Genus-differentia dovrebbe quindi essere spesso presente la nostra parola → abbiamo pensato di contare le parole più frequenti in tutte le definizioni.
 
 ## Risultati:
+```
 ----- Best 5 sense for Emotion -----
 
                                                                         Definition  Score
