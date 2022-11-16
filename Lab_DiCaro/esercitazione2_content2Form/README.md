@@ -5,8 +5,8 @@ Usando i dati sulle definizioni date per ogni concetto presente all'interno del 
 Il file `definizioni.xlsx` contenente le definizioni è mappato in un dizionario associando le keys ai concetti.  
 
 ## Estrazione dei synset
-I synset sono stati estratti da WordNet seguendo il principio del genus.  
-Prenderemo in considerazione solo i synset più frequenti dalla disambiguazione con iperonimi in comune. 
+I synset sono stati estratti da WordNet seguendo il principio del genus.
+Per seguire il principio del genus, abbiamo filtrato il contesto prendendo solo i termini che hanno il primo livello di iperonimia in comune con le 5 parole più frequenti all'interno delle definizioni.
 
 ## Score dei synset
 Per assegnare uno score ai synset abbiamo utilizzato una funzione che identifica la somiglianza tra contesto trovato dai synset e parole più frequenti (lo score più alto lo avrà il synset il cui contesto assomiglia di più alle nostre definizioni).
@@ -16,9 +16,9 @@ Da qui, verranno estratti i 5 synset con score più alto.
 Questa funzione crea un dizionario nella forma [concetto-lista definizioni] partendo dal file Excel.
 
 ### Funzione - disambiguation(dictionary, num_common_word)
-Effettua la disambiguazione (lesk) di ogni parola delle definizioni all'interno della definizione di appartenenza.
-Presi i 5 synset più frequenti della disambiguazione (per ogni concetto), ne prende gli iperonimi. 
-Restituisce un dizionario in cui per ogni concetto vengono salvati i 5 synset più comuni e il rispettivo iperonimo.
+Effettua la disambiguazione (utilizzando lesk) di ogni parola.
+Prese le 5 disambiguazioni più frequenti per ogni concetto e ne prende gli iperonimi. 
+Restituisce un dizionario in cui viene associato ad ognuno di questi 5 il suo iperonimo.
 
 ### Funzione - get_synset_score_disamb()
 Preso ogni concetto: 
@@ -31,3 +31,8 @@ viene calcolata l'intersezione tra il contesto del synset e le parole disambigua
 
 ### Funzione - print_table()
 Stampa la tabella degli score dei synset per ogni concetto, aggiungendo la definizione.
+
+
+## Seconda Idea:
+Abbiamo notato che in molte definizioni è presente il genus e quindi, per come abbiamo selezionato il contesto, gli iponimi dovrebbero essere anche gli iponimi della parola che stiamo cercando. 
+Per il principio del Genus-differentia dovrebbe quindi essere spesso presente la nostra parola → abbiamo pensato di contare le parole più frequenti in tutte le definizioni.
